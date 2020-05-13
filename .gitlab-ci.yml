@@ -1,0 +1,7 @@
+image: docker:latest
+
+maven-build:
+   iamge: maven:latest
+   stage: build
+   script:
+      -  mvn -Dmaven.test.skip=true package
