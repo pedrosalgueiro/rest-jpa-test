@@ -39,5 +39,5 @@ deploy:
        - chmod 700 ~/.ssh 
   
     script:
-       - scp ./docker-compose.yml deploy@deves.xdi.uevora.pt:
+       - scp ./docker-compose.yml deploy@deves.xdi.uevora.pt:./
  
