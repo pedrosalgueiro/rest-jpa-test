@@ -11,7 +11,3 @@ maven-build:
    stage: build
    script:
       -  mvn -Dmaven.test.skip=true package
-      
-deploy:
-   
-      
