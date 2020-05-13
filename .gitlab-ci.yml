@@ -4,31 +4,37 @@ services:
    - docker:dind
 
 stages:
-   - build
-   - package
-   
-#variables:
-#  DOCKER_HOST: tcp://docker:2375
-#  DOCKER_DRIVER: overlay2
-#  
-#before_script:
-#   - docker login -u $CI_REGISTRY_USER -p CI_REGISTRY_PASSWORD $CI_REGISTRY
-
-maven-build:
-   stage: build
-   image: maven:latest
-   script:
-       - mvn -Dmaven.test.skip=true package
-   artifacts:
-      paths:
-         - target/*.jar
-
-docker-build:
-   stage: package
-   script:
-       - echo $CI_REGISTRY_USER
-       - echo $CI_REGISTRY_PASSWORD 
-       - echo $CI_REGISTRY
-       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-       - docker-compose build
-       - docker-compose push
+#   - build
+#   - package
+   - deploy
+      
+#maven-build:
+#   stage: build
+#   image: maven:latest
+#   script:
+#       - mvn -Dmaven.test.skip=true package
+#   artifacts:
+#      paths:
+#         - target/*.jar
+#
+#docker-build:
+#   stage: package
+#   script:
+#       - echo $CI_REGISTRY_USER
+#       - echo $CI_REGISTRY_PASSWORD 
+#       - echo $CI_REGISTRY
+#       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#       - docker-compose build
+#       - docker-compose push
+       
+deploy:
+    stage: deploy
+    before_script:
+       - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+       - eval $(ssh-agent -s)
+       - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+       - mkdir -p ~/.ssh
+       - chmod 700 ~/.ssh 
+  
+    script:
+       - ssh deploy@deves.xdi.uevora.pt
