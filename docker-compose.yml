@@ -1,0 +1,28 @@
+version: '2'
+services:
+  app:
+    build: .
+    image: pedrosalgueiro/rest-jpa-example
+    networks:
+      - my-net
+    env_file: db.env
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    command: /wait-for-it.sh db:3306 -- java -jar /app.jar --spring.datasource.url=$${URL} --spring.datasource.username=$${USERNAME} --spring.datasource.password=$${PASSWORD}
+    
+  db:
+    image: mysql:latest
+    volumes:
+      - /tmp/dbstore:/var/lib/mysql
+    networks:
+      - my-net
+    environment:
+      MYSQL_DATABASE: teste
+      MYSQL_USER: pds
+      MYSQL_PASSWORD: password1
+      MYSQL_ROOT_PASSWORD: password1
+  
+networks:
+  my-net:
