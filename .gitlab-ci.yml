@@ -19,6 +19,9 @@ maven-build:
    image: maven:latest
    script:
        - mvn -Dmaven.test.skip=true package
+   artifacts:
+      paths:
+         - target/*.jar
 
 docker-build:
    stage: package
