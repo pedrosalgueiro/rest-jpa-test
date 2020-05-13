@@ -3,6 +3,10 @@ image: docker/compose
 services:
    - docker:dind
 
+stages:
+   - build
+   - package
+   
 #variables:
 #  DOCKER_HOST: tcp://docker:2375
 #  DOCKER_DRIVER: overlay2
