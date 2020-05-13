@@ -9,12 +9,17 @@ services:
 #  
 #before_script:
 #   - docker login -u $CI_REGISTRY_USER -p CI_REGISTRY_PASSWORD $CI_REGISTRY
-   
+
 maven-build:
    stage: build
+   image: maven:latest
+   script:
+       - mvn -Dmaven.test.skip=true package
+
+docker-build:
+   stage: package
    script:
        - echo $CI_REGISTRY_USER
        - echo $CI_REGISTRY_PASSWORD 
        - echo $CI_REGISTRY
        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#      - mvn -Dmaven.test.skip=true package
