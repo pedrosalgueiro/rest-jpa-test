@@ -42,7 +42,7 @@ deploy:
   
     script:
        - ssh -o StrictHostKeyChecking=no deploy@deves.xdi.uevora.pt "mkdir -p ./app"
-       - scp -o StrictHostKeyChecking=no ./.env ./docker-compose.prod.yml deploy@deves.xdi.uevora.pt:./app
+       - scp -o StrictHostKeyChecking=no ./db.env ./docker-compose.prod.yml deploy@deves.xdi.uevora.pt:./app
        - chmod +x ./deploy.sh
        - bash ./deploy.sh
        
