@@ -4,24 +4,25 @@ services:
     image: esue1920/rest-jpa-example
     networks:
       - my-net
-#    env_file: db.env
+    env_file: db.env
     depends_on:
       - db
     ports:
       - "8080:8080"
-    command: /wait-for-it.sh db:3306 -- java -jar /app.jar --spring.datasource.url=$${DB_URL} --spring.datasource.username=$${DB_USERNAME} --spring.datasource.password=$${DB_PASSWORD}
+    command: /wait-for-it.sh -t 120 db:3306 -- java -jar /app.jar --spring.datasource.url=$${DB_URL} --spring.datasource.username=$${DB_USERNAME} --spring.datasource.password=$${DB_PASSWORD}
     
   db:
     image: mysql:latest
     volumes:
-      - /tmp/dbstore:/var/lib/mysql
+      - /home/deploy/app/dbstore:/var/lib/mysql
     networks:
       - my-net
+    env_file: db.env
     environment:
-      MYSQL_DATABASE: $${DB_NAME}
-      MYSQL_USER: $${DB_USERNAME}
-      MYSQL_PASSWORD: $${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: $${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
   
 networks:
   my-net:
