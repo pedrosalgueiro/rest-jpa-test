@@ -1,11 +1,11 @@
-version: '2'
+version: '3'
 services:
   app:
     build: .
     image: pedrosalgueiro/rest-jpa-example
     networks:
       - my-net
-    env_file: db.env
+#    env_file: db.env
     depends_on:
       - db
     ports:
