@@ -2,7 +2,7 @@ version: '3'
 services:
   app:
     build: .
-    image: pedrosalgueiro/rest-jpa-example
+    image: esue1920/rest-jpa-example
     networks:
       - my-net
 #    env_file: db.env
