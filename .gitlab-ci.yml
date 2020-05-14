@@ -5,7 +5,7 @@ services:
 
 stages:
    - build
-#   - package
+   - package
 #   - deploy
       
 maven-build:
@@ -17,6 +17,12 @@ maven-build:
       paths:
          - target/*.jar
 
+docker-build:
+   stage: package
+   script:
+       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+       - docker-compose build
+       - docker-compose push
 
 
 
@@ -34,12 +40,6 @@ maven-build:
 
 
 
-#docker-build:
-#   stage: package
-#   script:
-#       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-#       - docker-compose build
-#       - docker-compose push
 #       
 #deploy:
 #    stage: deploy
