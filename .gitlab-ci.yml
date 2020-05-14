@@ -5,8 +5,8 @@ services:
 
 stages:
    - build
-   - package
-   - deploy
+#   - package
+#   - deploy
       
 maven-build:
    stage: build
@@ -17,30 +17,47 @@ maven-build:
       paths:
          - target/*.jar
 
-docker-build:
-   stage: package
-   script:
-       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-       - docker-compose build
-       - docker-compose push
-       
-deploy:
-    stage: deploy
-    image: ubuntu
-    before_script:
-       - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-       - eval $(ssh-agent -s)
-       - echo "$SSH_PRIVATE_KEY"
-       - echo "$SSH_PRIVATE_KEY" | ssh-add -
-       - mkdir -p ~/.ssh
-       - chmod 700 ~/.ssh 
-       - chmod +x ./setup_env.sh
-       - bash ./setup_env.sh
-  
-    script:
-       - ssh -o StrictHostKeyChecking=no deploy@deves.xdi.uevora.pt "mkdir -p ./app"
-       - scp -o StrictHostKeyChecking=no .env ./docker-compose.prod.yml deploy@deves.xdi.uevora.pt:./app
-       - chmod +x ./deploy.sh
-       - bash ./deploy.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#docker-build:
+#   stage: package
+#   script:
+#       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#       - docker-compose build
+#       - docker-compose push
+#       
+#deploy:
+#    stage: deploy
+#    image: ubuntu
+#    before_script:
+#       - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+#       - eval $(ssh-agent -s)
+#       - echo "$SSH_PRIVATE_KEY"
+#       - echo "$SSH_PRIVATE_KEY" | ssh-add -
+#       - mkdir -p ~/.ssh
+#       - chmod 700 ~/.ssh 
+#       - chmod +x ./setup_env.sh
+#       - bash ./setup_env.sh
+#  
+#    script:
+#       - ssh -o StrictHostKeyChecking=no deploy@deves.xdi.uevora.pt "mkdir -p ./app"
+#       - scp -o StrictHostKeyChecking=no .env ./docker-compose.prod.yml deploy@deves.xdi.uevora.pt:./app
+#       - chmod +x ./deploy.sh
+#       - bash ./deploy.sh
        
  
