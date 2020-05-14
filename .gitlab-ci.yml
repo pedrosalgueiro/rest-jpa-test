@@ -6,7 +6,7 @@ services:
 stages:
    - build
    - package
-#   - deploy
+   - deploy
       
 maven-build:
    stage: build
