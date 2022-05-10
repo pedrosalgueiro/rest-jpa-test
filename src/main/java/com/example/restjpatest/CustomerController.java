@@ -27,7 +27,7 @@ public class CustomerController {
 		Customer newCustomer = new Customer(firstName, lastName);
 		repository.save(newCustomer);
 		
-		String response = "Hello " + firstName + " " + lastName;
+		String response = "Ola " + firstName + " " + lastName;
 		
 		String oldVisitors = "";
 		for (Customer customer : repository.findAll()) {
