@@ -31,3 +31,12 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: test
       run: mvn test
+      
+    - name: Set up Docker Compose
+      uses: docker/setup-compose-action@v1
+      
+    - name: Build the Docker image
+      run: docker compose build
+      
+    #- name: Push Docker image to docker registry
+    #  run: docker compose build
