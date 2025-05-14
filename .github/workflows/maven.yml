@@ -59,3 +59,11 @@ jobs:
       run: |
         chmod +x ./setup_env.sh
         bash ./setup_env.sh
+
+    - name: deploy to ssh
+      run: |
+        ssh -o StrictHostKeyChecking=no deploy@deves.xdi.uevora.pt "mkdir -p ./app"
+        scp -o StrictHostKeyChecking=no .env ./docker-compose.prod.yml deploy@deves.xdi.uevora.pt:./app
+        chmod +x ./deploy.sh
+        bash ./deploy.sh
+
