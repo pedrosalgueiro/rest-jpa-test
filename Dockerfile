@@ -11,3 +11,4 @@ RUN chmod +x /wait-for-it.sh
 
 CMD java -jar /app.jar --spring.datasource.url="$URL" --spring.datasource.username="$USERNAME" --spring.datasource.password=$PASSWORD
 
+
